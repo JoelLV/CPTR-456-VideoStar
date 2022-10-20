@@ -1,11 +1,14 @@
 import './App.css'
-import VideoGallery from './components/VideoGallery'
+import BodyContent from './components/BodyContent'
 
 function App() {
 
   return (
-    <div className="video-gallery-container">
-      <VideoGallery />
+    <div>
+      <div className="home-header">
+        <h1>Videostar</h1>
+      </div>
+      <BodyContent />
     </div>
   )
 }

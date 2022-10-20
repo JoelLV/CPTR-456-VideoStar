@@ -3,7 +3,7 @@ const Video = ({ name, isFree, isPurchased, duration, size, price, url }) => {
         <div className="video-container">
             <div className="video-image">
                 <video crossOrigin="anonymous" className="video-elem">
-                    <source src={url.replace('http', 'https')} type="video/mp4" />
+                    <source src={url} type="video/mp4" />
                 </video>
                 <p className="video-duration">{duration}</p>
             </div>

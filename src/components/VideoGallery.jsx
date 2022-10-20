@@ -1,22 +1,10 @@
 import Video from "./Video"
-import { useEffect, useState } from "react"
-//import sampleData from "../assets/testData.json"
 
-const VideoGallery = () => {
-    const [videoData, setVideoData] = useState([])
-
-    useEffect (() => {
-        (async () => {
-            let data = await fetch("https://videostar.dacoder.io/")
-            data = await data.json()
-            setVideoData(data)
-        })()
-    }, [])
-
+const VideoGallery = ({ videos }) => {
     return (
         <div className="video-gallery">
             {
-                videoData.map(value => {
+                videos.map(value => {
                     return <Video 
                         key = {value.id}  
                         name = {value.name}
