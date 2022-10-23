@@ -1,4 +1,4 @@
-const Video = ({ name, isFree, isPurchased, duration, price, url }) => {
+const VideoPreview = ({ name, isFree, isPurchased, duration, price, url, videoTheaterSetter }) => {
     const blurredVideoCssClass = "video-image-hidden"
     const visibleVideoCssClass = "video-image"
 
@@ -15,7 +15,7 @@ const Video = ({ name, isFree, isPurchased, duration, price, url }) => {
     return (
         <div className="video-container">
             <div className="video-image-container">
-                <video crossOrigin="anonymous" className={(isFree || isPurchased ? visibleVideoCssClass : blurredVideoCssClass)}>
+                <video crossOrigin="anonymous" onClick={(isFree || isPurchased) ? videoTheaterSetter : null} className={(isFree || isPurchased ? visibleVideoCssClass : blurredVideoCssClass)}>
                     <source src={url} type="video/mp4" />
                 </video>
                 {(!isFree && !isPurchased) && <p className="paid-video-symbol">$</p>}
@@ -31,4 +31,4 @@ const Video = ({ name, isFree, isPurchased, duration, price, url }) => {
     )
 }
 
-export default Video
+export default VideoPreview
