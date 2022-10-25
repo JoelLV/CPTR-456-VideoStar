@@ -10,6 +10,25 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
     const [currentTime, setCurrentTime] = useState("00:00:00")
     const [progressBarWidth, setProgressBarWidth] = useState("0%")
     const [videoTheaterVisiblity, setVideoTheaterVisibility] = useState({display: "flex"})
+    const [videoClass, setVideoClass] = useState("video-theater")
+    const [isFullscreen, setIsFullscreen] = useState(false)
+    const [bottomControlsClass, setBottomControlsClass] = useState("theater-bottom-controls-container")
+
+    // React does not support onfullscreenchange.
+    // Event had to be added manually.
+    document.onfullscreenchange = () => {
+        if (document.fullscreenElement != null) {
+            setIsFullscreen(true)
+            setVideoClass("video-fullscreen")
+            setExitButtonVisibility({display: "none"})
+            setBottomControlsClass("fullscreen-bottom-controls-container")
+        } else {
+            setIsFullscreen(false)
+            setVideoClass("video-theater")
+            setExitButtonVisibility({display: "block"})
+            setBottomControlsClass("theater-bottom-controls-container")
+        }
+    }
 
     useEffect(() => {
         setCurrentTime("00:00:00")
@@ -80,30 +99,31 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
     }
 
     const handleToggleFullScreen = async ({ target }) => {
-        const videoContainer = target.parentElement.parentElement
-        
-        if (document.fullscreenElement != null) {
+        const videoContainer = target.parentElement.parentElement.parentElement
+
+        if (isFullscreen) {
             await document.exitFullscreen()
-            setExitButtonVisibility({display: "block"})
         } else {
             await videoContainer.requestFullscreen()
-            setExitButtonVisibility({display: "none"})
         }
     }
 
     if (videoUrl != null) {
         return (
-            <div key={`video-container-${videoId}`} style={videoTheaterVisiblity} className="video-theater-container" onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
-                <video key={`video-${videoId}`} crossOrigin="anonymous" className="video-theater"
+            <div key={`video-container-${videoId}`} style={videoTheaterVisiblity} className="video-theater-container" 
+                onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
+                <video key={`video-${videoId}`} crossOrigin="anonymous" className={videoClass}
                     onClick={handlePauseAction} onEnded={handleVideoEnded} onTimeUpdate={handleTimeUpdate}>
                         Your browser does not support the video tag
                         <source src={videoUrl} type="video/mp4"></source>
                 </video>
                 <img className="play-button" src="PlayButton.png" onClick={handlePlayAction} style={playButtonVisibility} />
-                <div className="progress-bar" style={{...bottomControlsVisibility, width: progressBarWidth}}></div>
-                <div className="timestamp-label" style={bottomControlsVisibility}>{currentTime}</div>
                 <div className="exit-theater-mode-icon" style={exitButtonVisibility}><i className="bi bi-x-square" onClick={handleCloseVideo}></i></div>
-                <div className="fullscreen-icon" style={bottomControlsVisibility}><i className="bi bi-fullscreen" onClick={handleToggleFullScreen}></i></div>
+                <div className={bottomControlsClass}>
+                    <div className="timestamp-label" style={bottomControlsVisibility}>{currentTime}</div>
+                    <div className="progress-bar" style={{...bottomControlsVisibility, width: progressBarWidth}}></div>
+                    <div className="fullscreen-icon" style={bottomControlsVisibility}><i className="bi bi-fullscreen" onClick={handleToggleFullScreen}></i></div>
+                </div>
             </div>
         )
     } else {
