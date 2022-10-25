@@ -124,11 +124,75 @@ p, h1 {
     cursor: pointer;
 }
 
-@media screen and (max-width: 800px) {
-    .content-body {
-        flex-direction: column;
-    }
-    .filter-column, .video-gallery {
-        width: 100%;
-    }
+.paid-video-symbol {
+    position: absolute;
+    font-size: 50px;
+    color: #F1DDBF;
+}
+
+.add-to-cart-button {
+    background-color: #F1DDBF;
+    color: #525E75;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 40px;
+    font-size: 15px;
+}
+
+.video-price-label {
+    font-size: 14px;
+    color: #F1DDBF;
+    padding-right: 5px;
+}
+
+.play-button {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+}
+
+.play-button:hover {
+    cursor: pointer;
+}
+
+.progress-bar {
+    position: absolute;
+    border-radius: 20px;
+    background-color: #F1DDBF;
+    width: 0;
+    height: 5px;
+    top: 450px;
+    left: 0;
+}
+
+.timestamp-label {
+    position: absolute;
+    top: 410px;
+    left: calc(100vw - 145px);
+    color: #F1DDBF;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 30px;
+}
+
+.fullscreen-icon {
+    position: absolute;
+    color: #F1DDBF;
+    top: 462px;
+    left: calc(100vw - 60px);
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.exit-theater-mode-icon {
+    position: absolute;
+    color: #F1DDBF;
+    top: 10px;
+    left: calc(100vw - 60px);
+    font-size: 30px;
+    cursor: pointer;
+}
+
+video::-webkit-media-controls {
+    display:none
 }
