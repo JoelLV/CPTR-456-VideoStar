@@ -196,3 +196,16 @@ p, h1 {
 video::-webkit-media-controls {
     display:none
 }
+
+.filter-gallery-container {
+    display: flex;
+}
+
+@media screen and (max-width: 800px) {
+    .filter-gallery-container {
+        flex-direction: column;
+    }
+    .filter-column, .video-gallery {
+        width: 100%;
+    }
+}

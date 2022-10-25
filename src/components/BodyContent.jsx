@@ -27,7 +27,7 @@ const BodyContent = () => {
     return (
         <div className="content-body">
             <VideoTheater videoId = {theaterVideoId} videoUrl = {urlToDisplayAsTheater} />
-            <div style={{display: "flex"}}>
+            <div className="filter-gallery-container">
                 <FilterForm />
                 <VideoGallery videos = {videoData} videoTheaterSetter = {handleTheaterVideoChange} />
             </div>
