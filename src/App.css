@@ -31,13 +31,13 @@ p, h1 {
     padding: 10px;
     background: rgba(146, 186, 146, 0.7);
     flex-direction: column;
-    width:10%;
+    width:15%;
 }
 
 .video-gallery {
     display: flex;
     gap: 30px;
-    width:90%;
+    width:85%;
     flex-wrap: wrap;
     justify-content: center;
     background: rgba(120, 147, 138, 0.75);
@@ -98,4 +98,13 @@ p, h1 {
     margin-left: auto;
     margin-right: 10px;
     cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .content-body {
+        flex-direction: column;
+    }
+    .filter-column, .video-gallery {
+        width: 100%;
+    }
 }
