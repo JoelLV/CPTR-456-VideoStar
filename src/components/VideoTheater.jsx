@@ -1,17 +1,33 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-const VideoTheater = ({ videoId, videoUrl }) => {
+const VideoTheater = ({ videoId, videoUrl, urlState }) => {
     const [isPaused, setIsPaused] = useState(true)
+    const [atBeginning, setAtBeginning] = useState(true)
+    const [atEnd, setAtEnd] = useState(false)
     const [bottomControlsVisibility, setBottomControlsVisibility] = useState({display: "block"})
     const [exitButtonVisibility, setExitButtonVisibility] = useState({display: "block"})
     const [playButtonVisibility, setPlayButtonVisibility] = useState({display: "block"})
     const [currentTime, setCurrentTime] = useState("00:00:00")
     const [progressBarWidth, setProgressBarWidth] = useState("0%")
+    const [videoTheaterVisiblity, setVideoTheaterVisibility] = useState({display: "flex"})
+
+    useEffect(() => {
+        setCurrentTime("00:00:00")
+        setProgressBarWidth("0%")
+        setPlayButtonVisibility({display: "block"})
+        setBottomControlsVisibility({display: "block"})
+        setAtBeginning(true)
+        setAtEnd(false)
+        setIsPaused(true)
+        setVideoTheaterVisibility({display: "flex"})
+    }, [urlState])
 
     const handlePlayAction = ({ target }) => {
         const videoElem = target.previousSibling
         setPlayButtonVisibility({display: "none"})
         setIsPaused(false)
+        setAtEnd(false)
+        setAtBeginning(false)
         videoElem.play()
     }
 
@@ -25,6 +41,7 @@ const VideoTheater = ({ videoId, videoUrl }) => {
     const handleVideoEnded = () => {
         setPlayButtonVisibility({display: "block"})
         setBottomControlsVisibility({display: "block"})
+        setAtEnd(true)
     }
 
     const handleTimeUpdate = ({ target }) => {
@@ -49,7 +66,7 @@ const VideoTheater = ({ videoId, videoUrl }) => {
     }
 
     const handleMouseLeave = () => {
-        if (!isPaused) {
+        if (!isPaused && !atBeginning && !atEnd) {
             setBottomControlsVisibility({display: "none"})
         }
     }
@@ -58,10 +75,8 @@ const VideoTheater = ({ videoId, videoUrl }) => {
         setBottomControlsVisibility({display: "block"})
     }
 
-    const handleCloseVideo = ({ target }) => {
-        const theaterContainer = target.parentElement.parentElement
-
-        theaterContainer.style.display = "none"
+    const handleCloseVideo = () => {
+        setVideoTheaterVisibility({display: "none"})
     }
 
     const handleToggleFullScreen = async ({ target }) => {
@@ -78,7 +93,7 @@ const VideoTheater = ({ videoId, videoUrl }) => {
 
     if (videoUrl != null) {
         return (
-            <div key={`video-container-${videoId}`} className="video-theater-container" onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
+            <div key={`video-container-${videoId}`} style={videoTheaterVisiblity} className="video-theater-container" onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
                 <video key={`video-${videoId}`} crossOrigin="anonymous" className="video-theater"
                     onClick={handlePauseAction} onEnded={handleVideoEnded} onTimeUpdate={handleTimeUpdate}>
                         Your browser does not support the video tag

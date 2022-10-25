@@ -1,4 +1,4 @@
-import VideoPreview from "./Video"
+import VideoPreview from "./VideoPreview"
 
 const VideoGallery = ({ videos, videoTheaterSetter }) => {
     return (
