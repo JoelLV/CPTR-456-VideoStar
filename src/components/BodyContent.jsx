@@ -1,23 +1,36 @@
 import VideoGallery from "./VideoGallery"
 import FilterForm from './FilterForm'
 import { useEffect, useState } from "react"
+import VideoTheater from "./VideoTheater"
 
 const BodyContent = () => {
     const [videoData, setVideoData] = useState([])
     const [favoriteVideos, setFavoriteVideos] = useState([])
+    const [urlToDisplayAsTheater, setUrlToDisplayAsTheater] = useState(null)
+    const [theaterVideoId, setTheaterVideoId] = useState(0)
+
+    const handleTheaterVideoChange = ({ target }) => {
+        let newUrl = new String(target.currentSrc)
+
+        setUrlToDisplayAsTheater(newUrl)
+        setTheaterVideoId(prevId => prevId + 1)
+    }
 
     useEffect (() => {
         (async () => {
-            let data = await fetch("https://videostar.dacoder.io/")
-            data = await data.json()
-            setVideoData(data)
+            const data = await fetch("https://videostar.dacoder.io/")
+            const dataJson = await data.json()
+            setVideoData(dataJson)
         })()
     }, [])
 
     return (
         <div className="content-body">
-            <FilterForm />
-            <VideoGallery videos = {videoData} />
+            <VideoTheater videoId = {theaterVideoId} videoUrl = {urlToDisplayAsTheater} />
+            <div style={{display: "flex"}}>
+                <FilterForm />
+                <VideoGallery videos = {videoData} videoTheaterSetter = {handleTheaterVideoChange} />
+            </div>
         </div>
     )
 }

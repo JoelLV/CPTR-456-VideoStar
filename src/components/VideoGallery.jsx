@@ -1,11 +1,11 @@
-import Video from "./Video"
+import VideoPreview from "./Video"
 
-const VideoGallery = ({ videos }) => {
+const VideoGallery = ({ videos, videoTheaterSetter }) => {
     return (
         <div className="video-gallery">
             {
                 videos.map(value => {
-                    return <Video 
+                    return <VideoPreview 
                         key = {value.id}  
                         name = {value.name}
                         isFree = {value.isFree}
@@ -14,6 +14,7 @@ const VideoGallery = ({ videos }) => {
                         size = {value.size}
                         price = {value.price}
                         url = {value.url}
+                        videoTheaterSetter = {videoTheaterSetter}
                     />
                 })
             }
