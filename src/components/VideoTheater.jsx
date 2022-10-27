@@ -14,19 +14,31 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
     const [isFullscreen, setIsFullscreen] = useState(false)
     const [bottomControlsClass, setBottomControlsClass] = useState("theater-bottom-controls-container")
 
+
+    const setFullscreenStates = () => {
+        setIsFullscreen(true)
+        setVideoClass("video-fullscreen")
+        setExitButtonVisibility({display: "none"})
+        setBottomControlsClass("fullscreen-bottom-controls-container")
+    }
+
+    const setTheaterStates = () => {
+        setIsFullscreen(false)
+        setVideoClass("video-theater")
+        setExitButtonVisibility({display: "block"})
+        setBottomControlsClass("theater-bottom-controls-container")
+    }
+
     // React does not support onfullscreenchange.
     // Event had to be added manually.
     document.onfullscreenchange = () => {
         if (document.fullscreenElement != null) {
-            setIsFullscreen(true)
-            setVideoClass("video-fullscreen")
-            setExitButtonVisibility({display: "none"})
-            setBottomControlsClass("fullscreen-bottom-controls-container")
+            setFullscreenStates()
         } else {
-            setIsFullscreen(false)
-            setVideoClass("video-theater")
-            setExitButtonVisibility({display: "block"})
-            setBottomControlsClass("theater-bottom-controls-container")
+            if (window.innerWidth < 800) {
+                setVideoTheaterVisibility({display: "none"})
+            }
+            setTheaterStates()
         }
     }
 
@@ -108,10 +120,16 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
         }
     }
 
+    const handleOnLoad = ({ target }) => {
+        if (window.innerWidth < 800) {
+            target.parentElement.requestFullscreen()
+        }
+    }
+
     if (videoUrl != null) {
         return (
             <div key={`video-container-${videoId}`} style={videoTheaterVisiblity} className="video-theater-container" 
-                onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
+                onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} onLoad={handleOnLoad}>
                 <video key={`video-${videoId}`} crossOrigin="anonymous" className={videoClass}
                     onClick={handlePauseAction} onEnded={handleVideoEnded} onTimeUpdate={handleTimeUpdate}>
                         Your browser does not support the video tag

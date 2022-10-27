@@ -6,6 +6,7 @@ import VideoTheater from "./VideoTheater"
 const BodyContent = () => {
     const [videoData, setVideoData] = useState([])
     const [favoriteVideos, setFavoriteVideos] = useState([])
+    const [videosInCart, setVideosInCart] = useState([])
     const [urlToDisplayAsTheater, setUrlToDisplayAsTheater] = useState(null)
     const [theaterVideoId, setTheaterVideoId] = useState(0)
 

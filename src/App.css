@@ -41,14 +41,7 @@ p, h1 {
     flex-direction: column;
     gap: 5px;
     width: 100%;
-}
-
-.theater-bottom-controls-container {
-    top: 402px;
-}
-
-.fullscreen-bottom-controls-container {
-    top: 88%;
+    top: calc(100% - 95px);
 }
 
 .video-theater {
@@ -207,7 +200,7 @@ p, h1 {
     position: absolute;
     color: #F1DDBF;
     top: 10px;
-    left: calc(100vw - 60px);
+    left: calc(100% - 45px);
     font-size: 30px;
     cursor: pointer;
 }
