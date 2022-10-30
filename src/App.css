@@ -27,6 +27,28 @@ p, h1 {
     flex-direction: column;
 }
 
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    font-size: 30px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D9D9D9;
+    width: 121px;
+    height: 40px;
+    font-family: 'Quicksand', sans-serif;
+    color: #000000;
+}
+
 .video-theater-container {
     position: relative;
     display: flex;
@@ -62,14 +84,22 @@ p, h1 {
     width:15%;
 }
 
+.video-gallery-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 85%;
+    background: rgba(120, 147, 138, 0.75);
+    gap: 10px;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
 .video-gallery {
     display: flex;
     gap: 30px;
-    width:85%;
     flex-wrap: wrap;
     justify-content: center;
-    background: rgba(120, 147, 138, 0.75);
-    padding: 10px;
 }
 
 .video-container {
@@ -118,8 +148,8 @@ p, h1 {
 
 .video-duration {
     position: absolute;
-    top: 135px;
-    left: 212px;
+    top: 130px;
+    left: calc(100% - 83px);
     color: #F1DDBF;
 }
 
@@ -213,7 +243,7 @@ p, h1 {
     .filter-gallery-container {
         flex-direction: column;
     }
-    .filter-column, .video-gallery {
+    .filter-column, .video-gallery-container {
         width: 100%;
     }
 }
