@@ -26,7 +26,7 @@ const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos, fa
         <div className="video-gallery-container">
             <nav className="nav-container">
                 <div className="logo">Logo</div>
-                <i className="bi bi-cart3 cart-icon"></i>
+                <button className="add-to-cart-button cart-icon"><i className="bi bi-cart3 cart-icon"></i></button>
             </nav>
             <h1>Recommended</h1>
             <div className="video-gallery">
