@@ -1,6 +1,41 @@
-const VideoPreview = ({ name, isFree, isPurchased, duration, price, url, videoTheaterSetter }) => {
+import { useEffect, useState } from "react"
+
+const VideoPreview = ({ videoId, name, isFree, isPurchased, duration, price, url, videoTheaterSetter, favoriteVideoSetter, videosInCartSetter }) => {
+    const [favButtonClass, setFavButtonClass] = useState("bi bi-suit-heart favorites-icon")
+    const [isFavorite, setIsFavorite] = useState(false)
     const blurredVideoCssClass = "video-image-hidden"
     const visibleVideoCssClass = "video-image"
+
+    useEffect(() => {
+        if (isFavorite) {
+            setFavButtonClass("bi bi-suit-heart-fill favorites-icon")
+        } else {
+            setFavButtonClass("bi bi-suit-heart favorites-icon")
+        }
+    }, [isFavorite])
+
+    const handleFavoriteVideo = () => {
+        favoriteVideoSetter(prevFavVideos => {
+            let indexToCheck = prevFavVideos.findIndex(value => value === videoId)
+            if (isFavorite && indexToCheck !== -1) {
+                prevFavVideos.splice(indexToCheck, 1)
+            } else if (indexToCheck === -1) {
+                prevFavVideos.push(videoId)
+            }
+            return [...prevFavVideos]
+        })
+        setIsFavorite(prevFavState => !prevFavState)
+    }
+
+    const handleAddToCart = () => {
+        videosInCartSetter(prevVideosInCart => {
+            let indexToCheck = prevVideosInCart.findIndex(value => value === videoId)
+            if (indexToCheck === -1) {
+                prevVideosInCart.push(videoId)
+            }
+            return [...prevVideosInCart]
+        })
+    }
 
     // Trim video name to fit inside
     // video box.
@@ -23,9 +58,9 @@ const VideoPreview = ({ name, isFree, isPurchased, duration, price, url, videoTh
             </div>
             <div className="video-information-container">
                 <p className="video-title">{name}</p>
-                {(!isFree && !isPurchased) && (<button className="add-to-cart-button"><i className="bi bi-cart-plus"></i></button>)}
+                {(!isFree && !isPurchased) && (<button onClick={handleAddToCart} className="add-to-cart-button"><i className="bi bi-cart-plus"></i></button>)}
                 {(!isFree && !isPurchased) && (<p className="video-price-label">${price}</p>)}
-                {isFree && <p className="favorites-icon"><i className="bi bi-suit-heart favorites-icon"></i></p>}
+                {isFree && <p onClick={handleFavoriteVideo}><i className={favButtonClass}></i></p>}
             </div>
         </div>
     )

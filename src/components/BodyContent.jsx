@@ -5,9 +5,8 @@ import VideoTheater from "./VideoTheater"
 
 const BodyContent = () => {
     const [videoData, setVideoData] = useState([])
-    const [favoriteVideos, setFavoriteVideos] = useState([])
     const [recommendedVideos, setRecommendedVideos] = useState([])
-    const [videosInCart, setVideosInCart] = useState([])
+    const [favoriteVideos, setFavoriteVideos] = useState([])
     const [urlToDisplayAsTheater, setUrlToDisplayAsTheater] = useState(null)
     const [theaterVideoId, setTheaterVideoId] = useState(0)
 
@@ -31,8 +30,8 @@ const BodyContent = () => {
             let recVideos = [];
             const totalVideosToRecommend = Math.floor(potentialRecVideos.length / 4)
             for (let i = 0; i < totalVideosToRecommend; i++) {
-                let randomIndex = Math.floor(Math.random() * potentialRecVideos.length)
-                let randomVideo = potentialRecVideos[randomIndex]
+                const randomIndex = Math.floor(Math.random() * potentialRecVideos.length)
+                const randomVideo = potentialRecVideos[randomIndex]
                 recVideos.push(randomVideo)
                 potentialRecVideos.splice(randomIndex, 1)
             }
@@ -49,6 +48,7 @@ const BodyContent = () => {
                     galleryVideos={videoData}
                     videoTheaterSetter={handleTheaterVideoChange}
                     recommendedVideos={recommendedVideos}
+                    favoriteVideosSetter={setFavoriteVideos}
                 />
             </div>
         </div>

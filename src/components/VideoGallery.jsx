@@ -1,10 +1,14 @@
 import VideoPreview from "./VideoPreview"
+import { useState } from "react"
 
-const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos }) => {
+const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos, favoriteVideosSetter }) => {
+    const [videosInCart, setVideosInCart] = useState([])
+
     const renderVideos = (videos) => {
         return videos.map(value => {
             return <VideoPreview
                 key={value.id}
+                videoId={value.id}
                 name={value.name}
                 isFree={value.isFree}
                 isPurchased={value.isPurchased}
@@ -13,6 +17,8 @@ const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos }) 
                 price={value.price}
                 url={value.url}
                 videoTheaterSetter={videoTheaterSetter}
+                favoriteVideoSetter={favoriteVideosSetter}
+                videosInCartSetter={setVideosInCart}
             />
         })
     }

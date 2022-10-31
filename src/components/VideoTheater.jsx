@@ -14,33 +14,30 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
     const [isFullscreen, setIsFullscreen] = useState(false)
     const [bottomControlsClass, setBottomControlsClass] = useState("theater-bottom-controls-container")
 
-
-    const setFullscreenStates = () => {
-        setIsFullscreen(true)
-        setVideoClass("video-fullscreen")
-        setExitButtonVisibility({display: "none"})
-        setBottomControlsClass("fullscreen-bottom-controls-container")
-    }
-
-    const setTheaterStates = () => {
-        setIsFullscreen(false)
-        setVideoClass("video-theater")
-        setExitButtonVisibility({display: "block"})
-        setBottomControlsClass("theater-bottom-controls-container")
-    }
-
     // React does not support onfullscreenchange.
     // Event had to be added manually.
     document.onfullscreenchange = () => {
         if (document.fullscreenElement != null) {
-            setFullscreenStates()
+            setIsFullscreen(true)
         } else {
             if (window.innerWidth < 800) {
                 setVideoTheaterVisibility({display: "none"})
             }
-            setTheaterStates()
+            setIsFullscreen(false)
         }
     }
+
+    useEffect(() => {
+        if (isFullscreen) {
+            setVideoClass("video-fullscreen")
+            setExitButtonVisibility({display: "none"})
+            setBottomControlsClass("fullscreen-bottom-controls-container")
+        } else {
+            setVideoClass("video-theater")
+            setExitButtonVisibility({display: "block"})
+            setBottomControlsClass("theater-bottom-controls-container")
+        }
+    }, [isFullscreen])
 
     useEffect(() => {
         setCurrentTime("00:00:00")
