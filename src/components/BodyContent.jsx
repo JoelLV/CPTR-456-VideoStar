@@ -9,6 +9,7 @@ const BodyContent = () => {
     const [favoriteVideos, setFavoriteVideos] = useState([])
     const [urlToDisplayAsTheater, setUrlToDisplayAsTheater] = useState(null)
     const [theaterVideoId, setTheaterVideoId] = useState(0)
+    const [isLoading, setIsLoading] = useState(true)
 
     const handleTheaterVideoChange = ({ target }) => {
         let newUrl = new String(target.currentSrc)
@@ -25,6 +26,7 @@ const BodyContent = () => {
             const data = await fetch("https://videostar.dacoder.io/")
             const dataJson = await data.json()
             setVideoData(dataJson)
+            setIsLoading(false)
 
             let potentialRecVideos = dataJson.filter(value => !value.isFree);
             let recVideos = [];
@@ -49,6 +51,7 @@ const BodyContent = () => {
                     videoTheaterSetter={handleTheaterVideoChange}
                     recommendedVideos={recommendedVideos}
                     favoriteVideosSetter={setFavoriteVideos}
+                    loadingState={isLoading}
                 />
             </div>
         </div>

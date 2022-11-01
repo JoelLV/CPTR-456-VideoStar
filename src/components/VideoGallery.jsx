@@ -1,7 +1,8 @@
 import VideoPreview from "./VideoPreview"
 import { useState } from "react"
+import { Skeleton } from "@mui/material"
 
-const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos, favoriteVideosSetter }) => {
+const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recommendedVideos, favoriteVideosSetter }) => {
     const [videosInCart, setVideosInCart] = useState([])
 
     const renderVideos = (videos) => {
@@ -30,11 +31,17 @@ const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos, fa
             </nav>
             <h1>Recommended</h1>
             <div className="video-gallery">
-                {renderVideos(recommendedVideos)}
+                {
+                    loadingState ? [...Array(5)].map((_, index) => (<Skeleton key={index} variant="rectangle" style={{height: "200px", width: "280px"}} />)) 
+                        : renderVideos(recommendedVideos)
+                }
             </div>
             <h1>Gallery</h1>
             <div className="video-gallery">
-                {renderVideos(galleryVideos)}
+                {
+                    loadingState ? [...Array(20)].map((_, index) => (<Skeleton key={index} variant="rectangle" style={{height: "200px", width: "280px"}} />)) 
+                        : renderVideos(galleryVideos)
+                }
             </div>
         </div>
     )
