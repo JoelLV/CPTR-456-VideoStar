@@ -1,5 +1,4 @@
 p, h1 {
-    font-family: 'Quicksand', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -65,13 +64,13 @@ p, h1 {
     background-color: black;
 }
 
-.theater-bottom-controls-container, .fullscreen-bottom-controls-container {
+.bottom-controls-container {
     position: absolute;
     display: flex;
     flex-direction: column;
     gap: 5px;
     width: 100%;
-    top: calc(100% - 95px);
+    top: calc(100% - 110px);
 }
 
 .video-theater {
@@ -210,7 +209,7 @@ p, h1 {
     cursor: pointer;
 }
 
-.progress-bar {
+.video-progress-bar {
     position: relative;
     border-radius: 20px;
     background-color: #F1DDBF;

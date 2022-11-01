@@ -12,7 +12,6 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
     const [videoTheaterVisiblity, setVideoTheaterVisibility] = useState({display: "flex"})
     const [videoClass, setVideoClass] = useState("video-theater")
     const [isFullscreen, setIsFullscreen] = useState(false)
-    const [bottomControlsClass, setBottomControlsClass] = useState("theater-bottom-controls-container")
 
     // React does not support onfullscreenchange.
     // Event had to be added manually.
@@ -31,11 +30,9 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
         if (isFullscreen) {
             setVideoClass("video-fullscreen")
             setExitButtonVisibility({display: "none"})
-            setBottomControlsClass("fullscreen-bottom-controls-container")
         } else {
             setVideoClass("video-theater")
             setExitButtonVisibility({display: "block"})
-            setBottomControlsClass("theater-bottom-controls-container")
         }
     }, [isFullscreen])
 
@@ -134,9 +131,9 @@ const VideoTheater = ({ videoId, videoUrl, urlState }) => {
                 </video>
                 <img className="play-button" src="PlayButton.png" onClick={handlePlayAction} style={playButtonVisibility} />
                 <div className="exit-theater-mode-icon" style={exitButtonVisibility}><i className="bi bi-x-square" onClick={handleCloseVideo}></i></div>
-                <div className={bottomControlsClass}>
+                <div className="bottom-controls-container">
                     <div className="timestamp-label" style={bottomControlsVisibility}>{currentTime}</div>
-                    <div className="progress-bar" style={{...bottomControlsVisibility, width: progressBarWidth}}></div>
+                    <div className="video-progress-bar" style={{...bottomControlsVisibility, width: progressBarWidth}}></div>
                     <div className="fullscreen-icon" style={bottomControlsVisibility}><i className="bi bi-fullscreen" onClick={handleToggleFullScreen}></i></div>
                 </div>
             </div>
