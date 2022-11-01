@@ -29,11 +29,17 @@ const VideoPreview = ({ videoId, name, isFree, isPurchased, duration, price, url
 
     const handleAddToCart = () => {
         videosInCartSetter(prevVideosInCart => {
-            let indexToCheck = prevVideosInCart.findIndex(value => value === videoId)
-            if (indexToCheck === -1) {
-                prevVideosInCart.push(videoId)
+            if (prevVideosInCart.find(value => value.videoId === videoId) == null) {
+                return [...prevVideosInCart, {
+                    videoId: videoId,
+                    duration: duration,
+                    name: name,
+                    price: price,
+                    url: url,
+                }]
+            } else {
+                return [...prevVideosInCart]
             }
-            return [...prevVideosInCart]
         })
     }
 
@@ -45,7 +51,7 @@ const VideoPreview = ({ videoId, name, isFree, isPurchased, duration, price, url
     }
 
     // Remove milliseconds from duration string.
-    duration = duration.match(/[0-9]+:[0-9]+:[0-9]+/g)
+    duration = duration.match(/[0-9]+:[0-9]+:[0-9]+/g)[0]
 
     return (
         <div className="video-container">

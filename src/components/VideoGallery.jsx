@@ -44,7 +44,7 @@ const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recomme
     return (
         <div className="video-gallery-container">
             <ShoppingCart 
-            recommendedVideos={recommendedVideos}
+            recommendedVideos={videosInCart}
              />
             <h1>Recommended</h1>
             <div className="video-gallery">

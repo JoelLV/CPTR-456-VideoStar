@@ -5,14 +5,13 @@ import VideoPreview from './VideoPreview';
 
 const ShoppingCart = ({recommendedVideos}) => {
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const renderVideos = (videos) => {
-        return videos.map(value => {
+        return videos.map((value, index) => {
             return <VideoPreview
-                key={value.id}
+                key={index}
                 videoId={value.id}
                 name={value.name}
                 isFree={value.isFree}
