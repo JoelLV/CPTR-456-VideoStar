@@ -1,9 +1,27 @@
 import VideoPreview from "./VideoPreview"
 import { useState } from "react"
 import { Skeleton } from "@mui/material"
+import { FaShoppingCart } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+import {
+    Badge,
+    Button,
+    Container,
+    Dropdown,
+    FormControl,
+    Nav,
+    Navbar,
+    Offcanvas
+} from "react-bootstrap";
+import ShoppingCart from "./ShoppingCart";
 
 const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recommendedVideos, favoriteVideosSetter }) => {
     const [videosInCart, setVideosInCart] = useState([])
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const renderVideos = (videos) => {
         return videos.map(value => {
@@ -25,10 +43,9 @@ const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recomme
     }
     return (
         <div className="video-gallery-container">
-            <nav className="nav-container">
-                <div className="logo">Logo</div>
-                <i className="bi bi-cart3 cart-icon"></i>
-            </nav>
+            <ShoppingCart 
+            recommendedVideos={recommendedVideos}
+             />
             <h1>Recommended</h1>
             <div className="video-gallery">
                 {
