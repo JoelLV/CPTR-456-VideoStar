@@ -4,6 +4,14 @@ p, h1 {
     padding: 0;
 }
 
+.btn{
+    background-color: rgba(146, 186, 146, 0.7) !important;
+    width: 100px;
+    border-radius: 8px;
+    display: flex;
+    float: right;
+}
+
 .home-header {
     display: flex;
     align-items: center;
@@ -181,7 +189,7 @@ p, h1 {
     color: #525E75;
     border: none;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 60%;
     width: 40px;
     font-size: 15px;
 }

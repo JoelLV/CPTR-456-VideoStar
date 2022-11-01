@@ -1,12 +1,28 @@
-import { Offcanvas } from "react-bootstrap/esm";
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 const ShoppingCart = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return (
-        <Offcanvas scroll={true} show={true} placement="end">
-            <Offcanvas.Header closeButton>
-                <Offcanvas.Title>Cart</Offcanvas.Title>
-            </Offcanvas.Header>
-        </Offcanvas>
+        <>
+            <Button className="btn" onClick={handleShow}>
+                Launch
+            </Button>
+
+            <Offcanvas show={show} onHide={handleClose}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    Some text as placeholder. In real life you can have the elements you
+                    have chosen. Like, text, images, lists, etc.
+                </Offcanvas.Body>
+            </Offcanvas>
+        </>
     )
 }
 
