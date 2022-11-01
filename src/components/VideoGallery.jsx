@@ -12,6 +12,7 @@ import {
     Navbar,
     Offcanvas
 } from "react-bootstrap";
+import ShoppingCart from "./ShoppingCart";
 
 const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos, favoriteVideosSetter }) => {
     const [videosInCart, setVideosInCart] = useState([])
@@ -41,20 +42,9 @@ const VideoGallery = ({ galleryVideos, videoTheaterSetter, recommendedVideos, fa
     }
     return (
         <div className="video-gallery-container">
-            <nav className="nav-container">
-                <div className="logo">Logo</div>
-                <button className="add-to-cart-button cart-icon" onClick={handleShow}><i className="bi bi-cart3 cart-icon"></i></button>
-
-                <Offcanvas show={show} onHide={handleClose} placement="end">
-                    <Offcanvas.Header closeButton>
-                        <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-                    </Offcanvas.Header>
-                    <Offcanvas.Body>
-                        Some text as placeholder. In real life you can have the elements you
-                        have chosen. Like, text, images, lists, etc.
-                    </Offcanvas.Body>
-                </Offcanvas>
-            </nav>
+            <ShoppingCart 
+            recommendedVideos={recommendedVideos}
+             />
             <h1>Recommended</h1>
             <div className="video-gallery">
                 {renderVideos(recommendedVideos)}
