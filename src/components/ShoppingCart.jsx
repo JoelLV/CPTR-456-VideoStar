@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import VideoPreview from './VideoPreview';
+import CartPreview from './CartPreview';
 
-const ShoppingCart = ({recommendedVideos}) => {
+const ShoppingCart = ({ cartVideos, videoSetter }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const clear = () => {
+        videoSetter(prevVids => {
+            prevVids = []
+            return prevVids
+        })
+    }
+
     const renderVideos = (videos) => {
         return videos.map((value, index) => {
-            return <VideoPreview
+            return <CartPreview
                 key={index}
                 videoId={value.id}
                 name={value.name}
                 isFree={value.isFree}
-                isPurchased={true}
+                isPurchased={value.isPurchased}
                 duration={value.duration}
                 size={value.size}
                 price={value.price}
                 url={value.url}
-            />
+                videoSetter={videoSetter}
+            />  
         })
     }
 
@@ -34,7 +42,12 @@ const ShoppingCart = ({recommendedVideos}) => {
                     <Offcanvas.Title>Cart</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    {renderVideos(recommendedVideos)}
+                    <div className='canvasBody'>
+                        {renderVideos(cartVideos)}
+                        <p>Total: $0</p>
+                        <button className='purchase'>Purchase</button>
+                        <button onClick={clear} className='purchase'>Clear Cart</button>
+                    </div>
                 </Offcanvas.Body>
             </Offcanvas>
         </nav>

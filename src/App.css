@@ -183,6 +183,19 @@ p, h1 {
     color: #F1DDBF;
 }
 
+.purchase {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #F1DDBF;
+}
+
+.delete-button {
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 10px;
+    color: white;
+}
+
 .add-to-cart-button {
     background-color: #F1DDBF;
     color: #525E75;
