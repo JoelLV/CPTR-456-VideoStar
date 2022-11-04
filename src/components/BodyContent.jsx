@@ -41,11 +41,17 @@ const BodyContent = () => {
         })()
     }, [])
 
+    const MyForm = () => {
+        const [form, setForm] = useState({ hello: "", gender: "male", approved: false })
+    }
+
     return (
         <div className="content-body">
             <VideoTheater videoId={theaterVideoId} videoUrl={urlToDisplayAsTheater} urlState={urlToDisplayAsTheater} />
             <div className="filter-gallery-container">
-                <FilterForm />
+                <FilterForm
+                    videoSetter={setVideoData}
+                    favoriteVideos={favoriteVideos} />
                 <VideoGallery
                     galleryVideos={videoData}
                     videoTheaterSetter={handleTheaterVideoChange}

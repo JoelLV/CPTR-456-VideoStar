@@ -41,6 +41,7 @@ const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recomme
             />
         })
     }
+    
     return (
         <div className="video-gallery-container">
             <ShoppingCart 
