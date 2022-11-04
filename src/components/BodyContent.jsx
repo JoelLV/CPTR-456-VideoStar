@@ -41,10 +41,6 @@ const BodyContent = () => {
         })()
     }, [])
 
-    const MyForm = () => {
-        const [form, setForm] = useState({ hello: "", gender: "male", approved: false })
-    }
-
     return (
         <div className="content-body">
             <VideoTheater videoId={theaterVideoId} videoUrl={urlToDisplayAsTheater} urlState={urlToDisplayAsTheater} />
@@ -58,6 +54,7 @@ const BodyContent = () => {
                     recommendedVideos={recommendedVideos}
                     favoriteVideosSetter={setFavoriteVideos}
                     loadingState={isLoading}
+                    videoSetter={setVideoData}
                 />
             </div>
         </div>

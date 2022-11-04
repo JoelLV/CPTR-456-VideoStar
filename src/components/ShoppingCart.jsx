@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import CartPreview from './CartPreview';
 
-const ShoppingCart = ({ cartVideos, videoSetter }) => {
+const ShoppingCart = ({ cartVideos, videoSetter, mainVideoSetter }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -12,6 +12,17 @@ const ShoppingCart = ({ cartVideos, videoSetter }) => {
         videoSetter(prevVids => {
             prevVids = []
             return prevVids
+        })
+    }
+
+    const purchase = () => {
+        mainVideoSetter(prevVids => {
+            cartVideos.map((video) => {
+                let index = prevVids.findIndex(value => value.name.substring(0,10) === video.name.substring(0,10))
+                prevVids[index].isFree = true
+            })
+            clear()
+            return [...prevVids]
         })
     }
 
@@ -45,7 +56,7 @@ const ShoppingCart = ({ cartVideos, videoSetter }) => {
                     <div className='canvasBody'>
                         {renderVideos(cartVideos)}
                         <p>Total: $0</p>
-                        <button className='purchase'>Purchase</button>
+                        <button onClick={purchase} className='purchase'>Purchase</button>
                         <button onClick={clear} className='purchase'>Clear Cart</button>
                     </div>
                 </Offcanvas.Body>

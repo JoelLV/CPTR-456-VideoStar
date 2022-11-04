@@ -23,6 +23,7 @@ const CartPreview = ({ videoId, name, isFree, isPurchased, duration, price, url,
     const handleDelete = () => {
         videoSetter(prevVideos => {
             let index = prevVideos.findIndex(value => value.name === name)
+            console.log(index)
             prevVideos.splice(index, 1)
             return [...prevVideos]
         })
