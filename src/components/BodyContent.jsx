@@ -5,6 +5,7 @@ import VideoTheater from "./VideoTheater"
 
 const BodyContent = () => {
     const [videoData, setVideoData] = useState([])
+    const [originalData, setOriginalData] = useState([])
     const [recommendedVideos, setRecommendedVideos] = useState([])
     const [favoriteVideos, setFavoriteVideos] = useState([])
     const [urlToDisplayAsTheater, setUrlToDisplayAsTheater] = useState(null)
@@ -26,6 +27,7 @@ const BodyContent = () => {
             const data = await fetch("https://videostar.dacoder.io/")
             const dataJson = await data.json()
             setVideoData(dataJson)
+            setOriginalData(dataJson)
             setIsLoading(false)
 
             let potentialRecVideos = dataJson.filter(value => !value.isFree);
@@ -47,7 +49,8 @@ const BodyContent = () => {
             <div className="filter-gallery-container">
                 <FilterForm
                     videoSetter={setVideoData}
-                    favoriteVideos={favoriteVideos} />
+                    favoriteVideos={favoriteVideos}
+                    data={originalData} />
                 <VideoGallery
                     galleryVideos={videoData}
                     videoTheaterSetter={handleTheaterVideoChange}

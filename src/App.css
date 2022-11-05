@@ -189,6 +189,10 @@ p, h1 {
     background-color: #F1DDBF;
 }
 
+.textbox {
+    width: 100px;
+}
+
 .delete-button {
     background-color: red;
     border-radius: 50%;

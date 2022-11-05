@@ -43,6 +43,14 @@ const ShoppingCart = ({ cartVideos, videoSetter, mainVideoSetter }) => {
         })
     }
 
+    const total = (videos) => {
+        let sum = 0
+        videos.map((value) => {
+            sum += value.price
+        })
+        return Math.round(100*sum)/100
+    }
+
     return (
         <nav className="nav-container">
             <div className="logo">Logo</div>
@@ -55,7 +63,7 @@ const ShoppingCart = ({ cartVideos, videoSetter, mainVideoSetter }) => {
                 <Offcanvas.Body>
                     <div className='canvasBody'>
                         {renderVideos(cartVideos)}
-                        <p>Total: $0</p>
+                        <p>Total: ${total(cartVideos)}</p>
                         <button onClick={purchase} className='purchase'>Purchase</button>
                         <button onClick={clear} className='purchase'>Clear Cart</button>
                     </div>
