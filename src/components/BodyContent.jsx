@@ -56,6 +56,7 @@ const BodyContent = () => {
                     videoTheaterSetter={handleTheaterVideoChange}
                     recommendedVideos={recommendedVideos}
                     favoriteVideosSetter={setFavoriteVideos}
+                    favoriteVideos={favoriteVideos}
                     loadingState={isLoading}
                     videoSetter={setVideoData}
                 />

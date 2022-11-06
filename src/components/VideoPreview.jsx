@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const VideoPreview = ({ videoId, name, isFree, isPurchased, duration, price, url, videoTheaterSetter, favoriteVideoSetter, videosInCartSetter }) => {
+const VideoPreview = ({ videoId, name, isFree, isPurchased, duration, price, url, videoTheaterSetter, favoriteVideoSetter, favoriteVideos, videosInCartSetter }) => {
     const [favButtonClass, setFavButtonClass] = useState("bi bi-suit-heart favorites-icon")
     const [isFavorite, setIsFavorite] = useState(false)
     const blurredVideoCssClass = "video-image-hidden"
@@ -13,6 +13,12 @@ const VideoPreview = ({ videoId, name, isFree, isPurchased, duration, price, url
             setFavButtonClass("bi bi-suit-heart favorites-icon")
         }
     }, [isFavorite])
+
+    useEffect(() => {
+        if (favoriteVideos.find(valueId => valueId === videoId) != null) {
+            setIsFavorite(true)
+        }
+    })
 
     const handleFavoriteVideo = () => {
         favoriteVideoSetter(prevFavVideos => {

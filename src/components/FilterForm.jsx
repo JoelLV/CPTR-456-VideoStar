@@ -1,90 +1,83 @@
+import { useEffect } from "react";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
-
-    const textSearch = () => {
-        videoSetter(data)
-        videoSetter(prevVids => {
-            let ina = []
-            let test = document.getElementsByClassName('text')[0].value
-            prevVids.map((video) => {
-                if (video.name.toLowerCase().includes(test.toLowerCase())) {
-                    ina.push(video)
+    const [formData, setFormData] = useState({
+        title: "",
+        length: "",
+        alphaOrder: "",
+        freeOrPaid: "",
+        favorites: false,
+    })
+    
+    const filterVideos = (videos) => {
+        return videos.filter(value => {
+            if (formData.title != "" && !value.name.toLowerCase().includes(formData.title)) {
+                return false
+            }
+            if (formData.freeOrPaid != "") {
+                if (formData.freeOrPaid === "free" && !value.isFree) {
+                    return false
+                } else if (formData.freeOrPaid === "paid" && value.isFree) {
+                    return false
                 }
-            })
-            return [...ina]
+            }
+            if (formData.favorites && favoriteVideos.find(favId => favId === value.id) == null) {
+                return false
+            }
+            return true
         })
     }
-
-    const shortToLong = () => {
-        videoSetter(prevVids => {
-            prevVids.sort((a, b) => parseFloat(a.duration.split(":").pop()) - parseFloat(b.duration.split(":").pop()))
-            return [...prevVids]
-        })
-    }
-
-    const longToShort = () => {
-        videoSetter(prevVids => {
-            prevVids.sort((a, b) => parseFloat(b.duration.split(":").pop()) - parseFloat(a.duration.split(":").pop()))
-            return [...prevVids]
-        })
-    }
-
-    const ascending = () => {
-        videoSetter(prevVids => {
-            prevVids.sort(function (a, b) {
+    
+    const sortVideos = (videos) => {
+        if (formData.length === "longToShort") {
+            videos.sort((a, b) => parseFloat(b.duration.split(":").pop()) - parseFloat(a.duration.split(":").pop()))
+        } else if (formData.length === "shortToLong") {
+            videos.sort((a, b) => parseFloat(a.duration.split(":").pop()) - parseFloat(b.duration.split(":").pop()))
+        }
+        if (formData.alphaOrder === "alphaAsc") {
+            videos.sort((a, b) => {
                 return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
             });
-            return [...prevVids]
-        })
-    }
-
-    const descending = () => {
-        videoSetter(prevVids => {
-            prevVids.sort(function (a, b) {
+        } else if (formData.alphaOrder === "alphaDesc") {
+            videos.sort((a, b) => {
                 return b.name < a.name ? -1 : b.name > a.name ? 1 : 0;
             });
-            return [...prevVids]
-        })
+        }
+        return videos
     }
-
-    const isFree = () => {
-        textSearch()
-        videoSetter(prevVids => {
-            let ina = prevVids.filter(state => state.isFree)
-            return [...ina]
-        })
+    
+    const filterAndSort = () => {
+        let filteredVideos = filterVideos(data)
+        filteredVideos = sortVideos(filteredVideos)
+        
+        return filteredVideos
     }
+    
+    useEffect(() => {
+        videoSetter(filterAndSort())
+    }, [formData])
 
-    const isPaid = () => {
-        textSearch()
-        videoSetter(prevVids => {
-            let ina = prevVids.filter(state => state.isFree === false)
-            return [...ina]
-        })
-    }
-
-    const favorite = () => {
-        videoSetter(prevVids => {
-            console.log(favoriteVideos)
-            return [...prevVids]
+    const handleFormChange = ({ target }) => {
+        const {name, value, checked, type} = target
+        console.log(`checkbox state ${checked}`)
+        setFormData(prevFormData => {
+            return {
+                ...prevFormData,
+                [name]: type !== "checkbox" ? value : checked
+            }
         })
     }
 
     const clear = () => {
-        document.getElementsByClassName('text')[0].value = ""
-        let ele = document.getElementsByName("length")
-        for (let i = 0; i < ele.length; i++) {
-            ele[i].checked = false
-        }
-        let title = document.getElementsByName("title")
-        for (let i = 0; i < title.length; i++) {
-            title[i].checked = false
-        }
-        let freeOrPaid = document.getElementsByName("freeOrPaid")
-        for (let i = 0; i < freeOrPaid.length; i++) {
-            freeOrPaid[i].checked = false
-        }
+        setFormData({
+            title: "",
+            length: "",
+            alphaOrder: "",
+            freeOrPaid: "",
+            favorites: false,
+        })
         videoSetter(data)
     }
 
@@ -92,21 +85,21 @@ const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
         <div className="filter-column">
             <p>Filter</p>
             <Form.Label>Title</Form.Label>
-            <Form.Control onChange={textSearch} className="text" type="textbox" />
+            <Form.Control onChange={handleFormChange} className="text" type="textbox" name="title" value={formData.title} />
             <Form.Label>Longest to Shortest</Form.Label>
-            <Form.Check onClick={longToShort} inline type="radio" name="length" />
+            <Form.Check onChange={handleFormChange} inline type="radio" name="length" value="longToShort" checked={formData.length === "longToShort"}/>
             <Form.Label>Shortest to Longest</Form.Label>
-            <Form.Check onClick={shortToLong} inline type="radio" name="length" />
+            <Form.Check onChange={handleFormChange} inline type="radio" name="length" value="shortToLong" checked={formData.length === "shortToLong"} />
             <Form.Label>Ascending</Form.Label>
-            <Form.Check onClick={ascending} inline type="radio" name="title" />
+            <Form.Check onChange={handleFormChange} inline type="radio" name="alphaOrder" value="alphaAsc" checked={formData.alphaOrder === "alphaAsc"} />
             <Form.Label>Descending</Form.Label>
-            <Form.Check onClick={descending} inline type="radio" name="title" />
+            <Form.Check onChange={handleFormChange} inline type="radio" name="alphaOrder" value="alphaDesc" checked={formData.alphaOrder === "alphaDesc"}/>
             <Form.Label>Free</Form.Label>
-            <Form.Check onClick={isFree} inline type="radio" name="freeOrPaid" />
+            <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="free" checked={formData.freeOrPaid === "free"} />
             <Form.Label>Paid</Form.Label>
-            <Form.Check onClick={isPaid} inline type="radio" name="freeOrPaid" />
+            <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="paid" checked={formData.freeOrPaid === "paid"} />
             <Form.Label>Favorite</Form.Label>
-            <Form.Check onClick={favorite} type="checkbox" className="check" />
+            <Form.Check onChange={handleFormChange} type="checkbox" className="check" name="favorites" selected={formData.favorites} />
             <button onClick={clear} type="button">Clear</button>
         </div>
     )

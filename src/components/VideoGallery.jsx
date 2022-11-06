@@ -15,7 +15,7 @@ import {
 } from "react-bootstrap";
 import ShoppingCart from "./ShoppingCart";
 
-const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recommendedVideos, favoriteVideosSetter, videoSetter }) => {
+const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recommendedVideos, favoriteVideosSetter, favoriteVideos, videoSetter }) => {
     const [videosInCart, setVideosInCart] = useState([])
 
     const [show, setShow] = useState(false);
@@ -37,6 +37,7 @@ const VideoGallery = ({ loadingState, galleryVideos, videoTheaterSetter, recomme
                 url={value.url}
                 videoTheaterSetter={videoTheaterSetter}
                 favoriteVideoSetter={favoriteVideosSetter}
+                favoriteVideos={favoriteVideos}
                 videosInCartSetter={setVideosInCart}
             />
         })
