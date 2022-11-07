@@ -87,7 +87,7 @@ p, h1 {
     display: flex;
     background: rgba(146, 186, 146, 0.7);
     flex-direction: column;
-    width: 15%;
+    width: 20%;
     padding: 10px;
     box-sizing: border-box;
 }
@@ -97,11 +97,22 @@ p, h1 {
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
-    width: 85%;
+    width: 80%;
     background: rgba(120, 147, 138, 0.75);
     gap: 10px;
     color: #FFFFFF;
     font-size: 20px;
+}
+
+Label {
+    margin-right: 10px;
+}
+
+.clear-button {
+    background-color: #525e75;
+    border-color: white;
+    color: white;
+    border-radius: 20px;
 }
 
 .video-gallery {
@@ -191,6 +202,19 @@ p, h1 {
 
 .textbox {
     width: 100px;
+}
+
+.filter-header {
+    color: #FFFFFF;
+    font-weight: 400;
+}
+
+.divider {
+    color: #FFFFFF;
+    background-color: #FFFFFF;
+    margin-top: 0px;
+    height: 3px;
+    border: none;
 }
 
 .delete-button {

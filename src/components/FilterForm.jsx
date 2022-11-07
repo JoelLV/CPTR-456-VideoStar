@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
 const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
     const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
         freeOrPaid: "",
         favorites: false,
     })
-    
+
     const filterVideos = (videos) => {
         return videos.filter(value => {
             if (formData.title != "" && !value.name.toLowerCase().includes(formData.title)) {
@@ -29,7 +29,7 @@ const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
             return true
         })
     }
-    
+
     const sortVideos = (videos) => {
         if (formData.length === "longToShort") {
             videos.sort((a, b) => parseFloat(b.duration.split(":").pop()) - parseFloat(a.duration.split(":").pop()))
@@ -47,20 +47,20 @@ const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
         }
         return videos
     }
-    
+
     const filterAndSort = () => {
         let filteredVideos = filterVideos(data)
         filteredVideos = sortVideos(filteredVideos)
-        
+
         return filteredVideos
     }
-    
+
     useEffect(() => {
         videoSetter(filterAndSort())
     }, [formData])
 
     const handleFormChange = ({ target }) => {
-        const {name, value, checked, type} = target
+        const { name, value, checked, type } = target
         console.log(`checkbox state ${checked}`)
         setFormData(prevFormData => {
             return {
@@ -83,24 +83,44 @@ const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
 
     return (
         <div className="filter-column">
-            <p>Filter</p>
+            <h1 className="filter-header">Filter</h1>
+            <hr className="divider"></hr>
             <Form.Label>Title</Form.Label>
             <Form.Control onChange={handleFormChange} className="text" type="textbox" name="title" value={formData.title} />
-            <Form.Label>Longest to Shortest</Form.Label>
-            <Form.Check onChange={handleFormChange} inline type="radio" name="length" value="longToShort" checked={formData.length === "longToShort"}/>
-            <Form.Label>Shortest to Longest</Form.Label>
-            <Form.Check onChange={handleFormChange} inline type="radio" name="length" value="shortToLong" checked={formData.length === "shortToLong"} />
-            <Form.Label>Ascending</Form.Label>
-            <Form.Check onChange={handleFormChange} inline type="radio" name="alphaOrder" value="alphaAsc" checked={formData.alphaOrder === "alphaAsc"} />
-            <Form.Label>Descending</Form.Label>
-            <Form.Check onChange={handleFormChange} inline type="radio" name="alphaOrder" value="alphaDesc" checked={formData.alphaOrder === "alphaDesc"}/>
-            <Form.Label>Free</Form.Label>
-            <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="free" checked={formData.freeOrPaid === "free"} />
-            <Form.Label>Paid</Form.Label>
-            <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="paid" checked={formData.freeOrPaid === "paid"} />
+            <br></br>
+            <Row>
+                <Col>
+                    <Form.Label>Longest to Shortest</Form.Label> <br></br>
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="length" value="longToShort" checked={formData.length === "longToShort"} />
+                </Col>
+                <Col>
+                    <Form.Label>Shortest to Longest</Form.Label> <br></br>
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="length" value="shortToLong" checked={formData.length === "shortToLong"} />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Label>Ascending</Form.Label> <br></br>
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="alphaOrder" value="alphaAsc" checked={formData.alphaOrder === "alphaAsc"} />
+                </Col>
+                <Col>
+                    <Form.Label>Descending</Form.Label><br></br>
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="alphaOrder" value="alphaDesc" checked={formData.alphaOrder === "alphaDesc"} />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Label>Free</Form.Label> <br></br>
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="free" checked={formData.freeOrPaid === "free"} />
+                </Col>
+                <Col>
+                    <Form.Label>Paid</Form.Label> <br></br>
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="paid" checked={formData.freeOrPaid === "paid"} />
+                </Col>
+            </Row>
             <Form.Label>Favorite</Form.Label>
             <Form.Check onChange={handleFormChange} type="checkbox" className="check" name="favorites" selected={formData.favorites} />
-            <button onClick={clear} type="button">Clear</button>
+            <button className="clear-button" onClick={clear} type="button">Clear</button>
         </div>
     )
 }
