@@ -19,7 +19,6 @@ const ShoppingCart = ({ cartVideos, videoSetter, mainVideoSetter }) => {
         mainVideoSetter(prevVids => {
             cartVideos.map((video) => {
                 let index = prevVids.findIndex(value => value.name.substring(0,10) === video.name.substring(0,10))
-                prevVids[index].isPurchased = true
                 prevVids[index].isFree = true
             })
             clear()
