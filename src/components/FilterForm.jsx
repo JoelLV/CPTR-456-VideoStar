@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Form, Row, Col, Container } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 
 const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
     const [formData, setFormData] = useState({
@@ -61,7 +61,6 @@ const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
 
     const handleFormChange = ({ target }) => {
         const { name, value, checked, type } = target
-        console.log(`checkbox state ${checked}`)
         setFormData(prevFormData => {
             return {
                 ...prevFormData,

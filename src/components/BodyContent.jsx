@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import VideoTheater from "./VideoTheater"
 
 const BodyContent = () => {
-    const [videoData, setVideoData] = useState([])
+    const [filteredVideos, setFilteredVideos] = useState([])
     const [originalData, setOriginalData] = useState([])
     const [recommendedVideos, setRecommendedVideos] = useState([])
     const [favoriteVideos, setFavoriteVideos] = useState([])
@@ -19,15 +19,12 @@ const BodyContent = () => {
         setTheaterVideoId(prevId => prevId + 1)
     }
 
-    // Note: This is rendered twice because the project is ran
-    // on strict mode. In production, this is going to render only
-    // once.
     useEffect(() => {
         (async () => {
             const data = await fetch("https://videostar.dacoder.io/")
             const dataJson = await data.json()
-            setVideoData(dataJson)
             setOriginalData(dataJson)
+            setFilteredVideos(dataJson)
             setIsLoading(false)
 
             let potentialRecVideos = dataJson.filter(value => !value.isFree);
@@ -48,17 +45,17 @@ const BodyContent = () => {
             <VideoTheater videoId={theaterVideoId} videoUrl={urlToDisplayAsTheater} urlState={urlToDisplayAsTheater} />
             <div className="filter-gallery-container">
                 <FilterForm
-                    videoSetter={setVideoData}
+                    videoSetter={setFilteredVideos}
                     favoriteVideos={favoriteVideos}
                     data={originalData} />
                 <VideoGallery
-                    galleryVideos={videoData}
+                    galleryVideos={filteredVideos}
                     videoTheaterSetter={handleTheaterVideoChange}
                     recommendedVideos={recommendedVideos}
                     favoriteVideosSetter={setFavoriteVideos}
                     favoriteVideos={favoriteVideos}
                     loadingState={isLoading}
-                    videoSetter={setVideoData}
+                    videoSetter={setOriginalData}
                 />
             </div>
         </div>
