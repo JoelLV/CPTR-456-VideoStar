@@ -6,19 +6,36 @@ import VideoTheater from "./VideoTheater"
 const BodyContent = () => {
     const [filteredVideos, setFilteredVideos] = useState([])
     const [originalData, setOriginalData] = useState([])
-    const [recommendedVideos, setRecommendedVideos] = useState([])
     const [favoriteVideos, setFavoriteVideos] = useState([])
     const [urlToDisplayAsTheater, setUrlToDisplayAsTheater] = useState(null)
     const [theaterVideoId, setTheaterVideoId] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
 
+    /**
+     * Changes url inside theater video in order
+     * change the video that needs to be displayed
+     * in theater mode. Increments the container's
+     * id in order to force a re-render. Triggered
+     * when a VideoPreview component is clicked.
+     * 
+     * @param event
+     */
     const handleTheaterVideoChange = ({ target }) => {
         let newUrl = new String(target.currentSrc)
 
         setUrlToDisplayAsTheater(newUrl)
+        // Increment id in order for the key to be unique.
         setTheaterVideoId(prevId => prevId + 1)
     }
 
+    /**
+     * Fetch data on mount only and set the
+     * data in a state. The array which contains
+     * the filtered videos that need to be displayed
+     * must reference the same objects in the original
+     * array. Set state variable isLoading to false in order
+     * to quit displaying skeleton and show videos.
+     */
     useEffect(() => {
         (async () => {
             const data = await fetch("https://videostar.dacoder.io/")
@@ -26,17 +43,6 @@ const BodyContent = () => {
             setOriginalData(dataJson)
             setFilteredVideos(dataJson)
             setIsLoading(false)
-
-            let potentialRecVideos = dataJson.filter(value => !value.isFree);
-            let recVideos = [];
-            const totalVideosToRecommend = Math.floor(potentialRecVideos.length / 4)
-            for (let i = 0; i < totalVideosToRecommend; i++) {
-                const randomIndex = Math.floor(Math.random() * potentialRecVideos.length)
-                const randomVideo = potentialRecVideos[randomIndex]
-                recVideos.push(randomVideo)
-                potentialRecVideos.splice(randomIndex, 1)
-            }
-            setRecommendedVideos(recVideos)
         })()
     }, [])
 
@@ -51,11 +57,12 @@ const BodyContent = () => {
                 <VideoGallery
                     galleryVideos={filteredVideos}
                     videoTheaterSetter={handleTheaterVideoChange}
-                    recommendedVideos={recommendedVideos}
+                    recommendedVideos={originalData.filter(video => !video.isPurchased).slice(-3)}
                     favoriteVideosSetter={setFavoriteVideos}
                     favoriteVideos={favoriteVideos}
                     loadingState={isLoading}
                     videoSetter={setOriginalData}
+                    originalVideos={originalData}
                 />
             </div>
         </div>

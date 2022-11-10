@@ -1,10 +1,14 @@
-const CartPreview = ({ name, duration, price, url, videoSetter }) => {
+const CartPreview = ({ videoId, name, duration, price, url, videoSetter }) => {
 
+    /**
+     * Triggered whenever the delete button
+     * in the cart is clicked. Removes itself
+     * from the videos in the cart by using
+     * the prop videoSetter.
+     */
     const handleDelete = () => {
         videoSetter(prevVideos => {
-            let index = prevVideos.findIndex(value => value.name === name)
-            prevVideos.splice(index, 1)
-            return [...prevVideos]
+            return prevVideos.filter(value => value.videoId !== videoId)
         })
     }
 

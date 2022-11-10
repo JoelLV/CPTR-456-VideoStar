@@ -1,53 +1,80 @@
-import React, { useState } from 'react';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import CartPreview from './CartPreview';
+import React, { useState } from 'react'
+import Offcanvas from 'react-bootstrap/Offcanvas'
+import CartPreview from './CartPreview'
+import {v4 as uuid} from 'uuid'
 
 const ShoppingCart = ({ cartVideos, videoSetter, mainVideoSetter }) => {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [show, setShow] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
+    /**
+     * Event handler that empties all videos in the
+     * cart located in the state variable
+     * videosInCart in the parent component.
+     * Triggered when the clear button is clicked.
+     */
     const clear = () => {
-        videoSetter(prevVids => {
-            prevVids = []
-            return prevVids
-        })
+        videoSetter([])
     }
 
+    /**
+     * Event handler triggered whenever a user
+     * purchases videos in the cart. For each
+     * video inside of the array where all the videos
+     * are located, the flag isPurchased will be toggled
+     * in order to reflect the purchase in the UI.
+     */
     const purchase = () => {
-        mainVideoSetter(prevVids => {
-            cartVideos.map((video) => {
-                let index = prevVids.findIndex(value => value.name.substring(0,10) === video.name.substring(0,10))
-                prevVids[index].isPurchased = true
+        if (cartVideos.length > 0) {
+            mainVideoSetter(prevVids => {
+                return prevVids.map(video => {
+                    if (cartVideos.find(cartVid => cartVid.videoId === video.id) !== undefined) {
+                        video.isPurchased = true
+                    }
+                    return video
+                })
             })
             clear()
-            return [...prevVids]
-        })
+        }
     }
 
+    /**
+     * Helper function used to render
+     * all given videos as jsx elements.
+     * 
+     * @param videos array of video objects in the cart.
+     * @returns CartPreview jsx elements
+     */
     const renderVideos = (videos) => {
-        return videos.map((value, index) => {
+        return videos.map(value => {
             return <CartPreview
-                key={index}
-                videoId={value.id}
+                key={uuid()}
+                videoId={value.videoId}
                 name={value.name}
-                isFree={value.isFree}
-                isPurchased={value.isPurchased}
                 duration={value.duration}
-                size={value.size}
                 price={value.price}
                 url={value.url}
                 videoSetter={videoSetter}
             />  
         })
     }
-
+    
+    /**
+     * Helper function called
+     * every time the component is
+     * re-rendered. Updates the total
+     * price.
+     * 
+     * @param videos Array of video objects 
+     * @returns int Sum of prices.
+     */
     const total = (videos) => {
         let sum = 0
-        videos.map((value) => {
-            sum += value.price
+        videos.forEach(video => {
+            sum += video.price
         })
-        return Math.round(100*sum)/100
+        return Math.round(100 * sum) / 100
     }
 
     return (
