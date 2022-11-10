@@ -184,58 +184,60 @@ const FilterForm = ({ videoSetter, favoriteVideos, data }) => {
             <Form.Control onChange={handleFormChange} className="text" type="textbox" name="title" value={formData.title} />
             <Row>
                 <Col>
-                    <Form.Label>Show Free Videos Only</Form.Label><br />
+                    <Form.Label>Free Videos</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="free" checked={formData.freeOrPaid === "free"} />
                 </Col>
                 <Col>
-                    <Form.Label>Show Paid Videos Only</Form.Label><br />
+                    <Form.Label>Paid Videos</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="freeOrPaid" value="paid" checked={formData.freeOrPaid === "paid"} />
                 </Col>
                 <Col>
-                    <Form.Label>Show Favorites Only</Form.Label><br />
+                    <Form.Label>Favorites</Form.Label><br />
                     <Form.Check onChange={handleFormChange} type="checkbox" className="check" name="favorites" selected={formData.favorites} />
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <Form.Label>Show Videos Less Than 15 Secconds</Form.Label><br />
+                    <Form.Label>Less than 15s</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="lengthFilterType" value="lessThan15" checked={formData.lengthFilterType === "lessThan15"} />
                 </Col>
                 <Col>
-                    <Form.Label>Show Videos Between 15 and 30 seconds</Form.Label><br />
+                    <Form.Label>15s to 30s</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="lengthFilterType" value="between15And30" checked={formData.lengthFilterType === "between15And30"} />
                 </Col>
                 <Col>
-                    <Form.Label>Show Videos Greater Than 30 seconds</Form.Label><br />
+                    <Form.Label>Greater than 30s</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="lengthFilterType" value="greaterThan30" checked={formData.lengthFilterType === "greaterThan30"} />
                 </Col>
             </Row>
             <hr />
             <Row>
                 <Col>
-                    <Form.Label>Sort Longest to Shortest</Form.Label><br />
+                    <Form.Label>Longest to Shortest</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="longToShort" checked={formData.sortType === "longToShort"} />
                 </Col>
                 <Col>
-                    <Form.Label>Sort Shortest to Longest</Form.Label><br />
+                    <Form.Label>Shortest to Longest</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="shortToLong" checked={formData.sortType === "shortToLong"} />
-                </Col>
-                <Col>
-                    <Form.Label>Sort Ascending Alphabetically</Form.Label><br />
-                    <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="alphaAsc" checked={formData.sortType === "alphaAsc"} />
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <Form.Label>Sort Descending Alphabetically</Form.Label><br />
-                    <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="alphaDesc" checked={formData.sortType === "alphaDesc"} />
+                    <Form.Label>Ascending Alphabetically</Form.Label><br />
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="alphaAsc" checked={formData.sortType === "alphaAsc"} />
                 </Col>
                 <Col>
-                    <Form.Label>Sort Free Videos First</Form.Label><br />
+                    <Form.Label>Descending Alphabetically</Form.Label><br />
+                    <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="alphaDesc" checked={formData.sortType === "alphaDesc"} />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Label>Sort Free Videos</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="freeVideosFirst" checked={formData.sortType === "freeVideosFirst"} />
                 </Col>
                 <Col>
-                    <Form.Label>Sort Paid Videos First</Form.Label><br />
+                    <Form.Label>Sort Paid Videos</Form.Label><br />
                     <Form.Check onChange={handleFormChange} inline type="radio" name="sortType" value="paidVideosFirst" checked={formData.sortType === "paidVideosFirst"} />
                 </Col>
             </Row>
